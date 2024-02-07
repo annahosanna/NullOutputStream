@@ -1,17 +1,13 @@
 import java.io.IOException;
 import java.io.Reader;
 
-// Do I actually need to read data from the stream in order to consume data.
-// in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
-
-// Based on the output stream requirements:
-// If cbuf is null, a NullPointerException is thrown.
-// If off is negative, or len is negative, or off+len is greater than the length of the array cbuf, then an IndexOutOfBoundsException is thrown.
-// However if any of those conditions are true -1 is probably ok
+// Actually read data to consume it, and then discard the read data.
+// I could do it this way, but I wonder if using a BufferedReader internally might have better safety
 
 public class NullInputStreamReader extends Reader {
 
     private Reader reader;
+    int currentOffset = 0;
     
     public NullInputStreamReader(Reader reader) {
         this.reader = reader;
@@ -25,6 +21,8 @@ public class NullInputStreamReader extends Reader {
 
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
+        // I could remove this if I used a BufferedReader
+        // Its an infinite loop just waiting to happen
         while (!reader.ready()) {
             // Busy wait forever
         }
