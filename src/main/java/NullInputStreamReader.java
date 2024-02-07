@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.io.Reader;
 
+//  in = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
 public class NullInputStreamReader extends Reader {
 
     @Override
