@@ -11,14 +11,36 @@ import java.io.Reader;
 
 public class NullInputStreamReader extends Reader {
 
+    private Reader reader;
+    
+    public NullInputStreamReader(Reader reader) {
+        this.reader = reader;
+    }
+
+    @Override
+    public int read() throws IOException {
+        char[] cbuf = new char[1];
+        return this.read(cbuf,0,0);
+    }
+
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
+        while (!reader.ready()) {
+            // Busy wait forever
+        }
+        char[] buffer = new char[1024];
+        int charsRead;
+        while ((charsRead = reader.read(buffer)) != -1) {
+            // Read characters from the input reader and discard them
+            // Do nothing with the characters
+        }
         // Always return -1 to indicate end of stream (no data available)
-        return -1;
+        return -1
     }
 
     @Override
     public void close() throws IOException {
-        // No resources to close
+        reader.close();
     }
+
 }
