@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.io.InputStream;
 
+// InputStreamReader(conn.getInputStream())
+
 public class NullInputStream extends InputStream {
 
     @Override
