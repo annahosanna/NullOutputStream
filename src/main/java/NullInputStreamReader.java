@@ -2,8 +2,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.BufferedReader
     
-// Actually read data to consume it, and then discard the read data.
-// I could do it this way, but I wonder if using a BufferedReader internally might have better safety
+// Pass in something like an InputSteamReader
 
 public class NullInputStreamReader extends Reader {
 
