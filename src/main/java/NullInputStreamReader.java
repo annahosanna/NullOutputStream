@@ -35,7 +35,7 @@ public class NullInputStreamReader extends Reader {
         } catch (Exception e) {
           e.printStackTrace();
         }
-        return -1
+        return -1;
     }
 
     publiic readLine() throws IOException {
@@ -46,6 +46,7 @@ public class NullInputStreamReader extends Reader {
       } catch (Exception e) {
         e.printStackTrace();
       }
+      return null;
     }
     
     @Override
