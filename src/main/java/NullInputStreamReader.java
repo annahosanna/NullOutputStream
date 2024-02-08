@@ -53,4 +53,9 @@ public class NullInputStreamReader extends Reader {
         this.reader.close();
     }
 
+    @Override
+    public String toString() {
+      return "NullInputStringReader";
+    }
+ 
 }
