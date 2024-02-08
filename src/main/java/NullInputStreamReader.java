@@ -26,11 +26,15 @@ public class NullInputStreamReader extends Reader {
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
         int charsRead;
-        while ((charsRead = reader.read(buffer)) != -1) {
-            // Read characters from the input reader and discard them
-            // Do nothing with the characters
+        try {
+          while ((charsRead = reader.read(buffer)) != -1) {
+              // Read characters from the input reader and discard them
+              // Do nothing with the characters
+          }
+          // Always return -1 to indicate end of stream (no data available)
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-        // Always return -1 to indicate end of stream (no data available)
         return -1
     }
 
@@ -40,8 +44,6 @@ public class NullInputStreamReader extends Reader {
           // Do nothing with line
         }
       } catch (Exception e) {
-        // Since this is a Try With Resources, explicit closing is not needed
-        logger.error("Could not create a BufferedReader for StdIn");
         e.printStackTrace();
       }
     }
