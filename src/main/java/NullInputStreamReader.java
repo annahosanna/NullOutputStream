@@ -21,6 +21,7 @@ public class NullInputStreamReader extends Reader {
         return this.read(cbuf,0,1);
     }
 
+    // Read from buffer
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
@@ -33,6 +34,18 @@ public class NullInputStreamReader extends Reader {
         return -1
     }
 
+    publiic readLine() throws IOException {
+      try ( 
+        while ((this.reader != null) && (line = this.reader.readLine()) != null) {
+          // Do nothing with line
+        }
+      } catch (Exception e) {
+        // Since this is a Try With Resources, explicit closing is not needed
+        logger.error("Could not create a BufferedReader for StdIn");
+        e.printStackTrace();
+      }
+    }
+    
     @Override
     public void close() throws IOException {
         reader.close();
