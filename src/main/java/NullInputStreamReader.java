@@ -12,6 +12,7 @@ public class NullInputStreamReader extends Reader {
     // int readLength = 1;
     
     public NullInputStreamReader(Reader reader) {
+        try (new BufferedReader this.reader
         this.reader = reader;
     }
 
