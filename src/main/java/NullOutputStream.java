@@ -2,6 +2,8 @@ import io.OutputStream;
 
 public class NullOutputStream implements OutputStream {
 
+    // This can be passed to an OutputStreamReader.
+    
     @Override
     public void write(int b) {
     }
