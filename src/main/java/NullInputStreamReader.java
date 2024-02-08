@@ -12,10 +12,9 @@ public class NullInputStreamReader extends Reader {
     // int readLength = 1;
     
     public NullInputStreamReader(Reader reader) {
-        try (new BufferedReader this.reader
-        this.reader = reader;
+      BufferedReader this.reader = new BufferedReader(reader);
     }
-
+    
     @Override
     public int read() throws IOException {
         char[] cbuf = new char[1];
@@ -28,7 +27,7 @@ public class NullInputStreamReader extends Reader {
         char[] buffer = new char[1024];
         int charsRead;
         try {
-          while ((charsRead = reader.read(buffer)) != -1) {
+          while ((charsRead = this.reader.read(buffer)) != -1) {
               // Read characters from the input reader and discard them
               // Do nothing with the characters
           }
@@ -52,7 +51,7 @@ public class NullInputStreamReader extends Reader {
     
     @Override
     public void close() throws IOException {
-        reader.close();
+        this.reader.close();
     }
 
 }
