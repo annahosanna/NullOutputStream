@@ -20,17 +20,6 @@ public class DiscardInputStream extends FilterInputStream {
         return -1;
     }
 
-    public int read() throws IOException {
-        char[] buffer = new char[1024];
-        int charsRead;
-        while ((charsRead = this.inputStream.read(buffer)) != -1) {
-            // Read characters from the input reader and discard them
-            // Do nothing with the characters
-        }
-        // Always return -1 to indicate end of stream (no data available)
-        return -1;
-    }
-
     public int discardRead() throws IOException {
         char[] buffer = new char[1024];
         int charsRead;
