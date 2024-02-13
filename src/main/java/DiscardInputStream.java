@@ -14,40 +14,34 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public int read() throws IOException {
         // Read and discard all bytes - one at a time - returning -1 to indicate end of stream
-        while (this.inputStream.available() > 0) {
-            this.inputStream.read();
+        while ((this.inputStream.available() > 0) && (this.inputStream.read() != -1)) {
+            // Do not do anything
         }
         return -1;
     }
-
-    public int discardRead() throws IOException {
+    
+    @Override
+    public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
-        int charsRead;
-        while ((charsRead = this.inputStream.read(buffer)) != -1) {
-            // Read characters from the input reader and discard them
-            // Do nothing with the characters
+        try {
+          while ((this.inputStream.available() > 0) && ( this.inputStream.read(buffer) != -1)) {
+              // Read characters from the input stream and discard them
+              // Do nothing with the characters
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
         }
         // Always return -1 to indicate end of stream (no data available)
         return -1;
     }
     
     @Override
-    public int read(byte[] byteArray, int offset, int length) throws IOException {
-        // Read and discard bytes into the buffer, returning -1 to indicate end of stream
-        // This basically means any call to this function, regardless of the argument will return -1
-        while (length > 0) {
-            int bytesRead = this.inputStream.read(byteArray, offset, length);
-            if (bytesRead == -1) {
-                return -1;
-            }
-            offset += bytesRead;
-            length -= bytesRead;
-        }
-        return bytesRead;
+    public void close() throws IOException {
+        this.inputStream.close();
     }
 
     @Override
-    public void close() throws IOException {
-        this.inputStream.close();
+    public String toString() {
+        return "DiscardInputStream";
     }
 }
