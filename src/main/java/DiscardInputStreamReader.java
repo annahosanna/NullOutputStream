@@ -3,6 +3,14 @@ import java.io.Reader;
 import java.io.BufferedReader
     
 // Pass in something like an InputSteamReader
+// Everything throws an IOException ready (throw IOException always), 
+// mark (Throw IOException always), 
+// read (all 4 types should read everything to -1 or catch IOException and then return -1,
+// markSupported false
+// reset: IOException
+// ready: pretend so always return true
+// skip: IOException?
+// mark IOException
 
 public class DiscardInputStreamReader extends Reader {
 
