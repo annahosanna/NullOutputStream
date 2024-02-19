@@ -4,13 +4,13 @@ import java.io.BufferedReader
     
 // Pass in something like an InputSteamReader
 
-public class NullInputStreamReader extends Reader {
+public class DiscardInputStreamReader extends Reader {
 
     private BufferedReader reader;
     // int currentOffset = 0;
     // int readLength = 1;
     
-    public NullInputStreamReader(Reader reader) {
+    public DiscardInputStreamReader(Reader reader) {
       BufferedReader this.reader = new BufferedReader(reader);
     }
     
