@@ -1,7 +1,6 @@
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.Integer;
 
 public class DiscardInputStream extends FilterInputStream {
 
@@ -37,6 +36,7 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public long skip(long n) throws IOException {
         char[] cbuf = new char[1];
+        // n is long and I am ignoring the value anyway so do not even try to loop and mod it to chunks less than the size of an int
         int amountRead = this.read(cbuf, 0, 1);
         return 0;
     }
@@ -58,7 +58,7 @@ public class DiscardInputStream extends FilterInputStream {
         } catch (Exception e) {
           e.printStackTrace();
         }
-        // Always return -1 to indicate end of stream (no data available)
+        // Always return -1 to indicate end of what is currently available in the stream (but the stream is still open)
         return -1;
     }
     
