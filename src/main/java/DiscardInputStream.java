@@ -1,6 +1,7 @@
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.Integer;
 
 public class DiscardInputStream extends FilterInputStream {
 
@@ -12,12 +13,38 @@ public class DiscardInputStream extends FilterInputStream {
     }
 
     @Override
-    public int read() throws IOException {
-        // Read and discard all bytes - one at a time - returning -1 to indicate end of stream
-        while ((this.inputStream.available() > 0) && (this.inputStream.read() != -1)) {
-            // Do not do anything
+    public int available() throws IOException {
+        return true;
+    }
+
+    @Override
+    public void mark(int readlimit) {
+    }
+
+    @Override
+    public boolean markSupported() {
+        return false;
+    }
+
+    @Override
+    public int read(byte[] b) throws IOException {
+        if ( b == null ) {
+            // throw IOException;
         }
-        return -1;
+        return this.read(b, 0, 1);
+    }
+
+    @Override
+    public long skip(long n) throws IOException {
+        char[] cbuf = new char[1];
+        int amountRead = this.read(cbuf, 0, 1);
+        return 0;
+    }
+    
+    @Override
+    public int read() throws IOException {
+        char[] cbuf = new char[1];
+        return this.read(cbuf, 0, 1);
     }
     
     @Override
@@ -40,6 +67,10 @@ public class DiscardInputStream extends FilterInputStream {
         this.inputStream.close();
     }
 
+    @Override
+    public void reset() throws IOException {
+    }
+    
     @Override
     public String toString() {
         return "DiscardInputStream";
