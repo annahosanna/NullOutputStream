@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.Reader;
-import java.io.BufferedReader
     
 // Pass in something like an InputSteamReader
 // Everything throws an IOException ready (throw IOException always), 
@@ -14,12 +13,12 @@ import java.io.BufferedReader
 
 public class DiscardInputStreamReader extends Reader {
 
-    private BufferedReader reader;
+    private Reader reader;
     // int currentOffset = 0;
     // int readLength = 1;
     
     public DiscardInputStreamReader(Reader reader) {
-      BufferedReader this.reader = new BufferedReader(reader);
+      this.reader = reader;
     }
     
     @Override
@@ -28,13 +27,19 @@ public class DiscardInputStreamReader extends Reader {
         return this.read(cbuf,0,1);
     }
 
+    @Override
+    public int read(byte[] b) throws IOException {
+        char[] cbuf = new char[1];
+        return this.read(cbuf,0,1);
+    }
+    
     // Read from buffer
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
         int charsRead;
         try {
-          while ((charsRead = this.reader.read(buffer)) != -1) {
+          while ((this.reader != null) && (charsRead = this.reader.read(buffer))) != -1) {
               // Read characters from the input reader and discard them
               // Do nothing with the characters
           }
@@ -45,17 +50,6 @@ public class DiscardInputStreamReader extends Reader {
         return -1;
     }
 
-    publiic readLine() throws IOException {
-      try ( 
-        while ((this.reader != null) && (line = this.reader.readLine()) != null) {
-          // Do nothing with line
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      return null;
-    }
-    
     @Override
     public void close() throws IOException {
         this.reader.close();
@@ -63,7 +57,7 @@ public class DiscardInputStreamReader extends Reader {
 
     @Override
     public String toString() {
-      return "NullInputStringReader";
+      return "DiscardInputStreamReader";
     }
  
 }
