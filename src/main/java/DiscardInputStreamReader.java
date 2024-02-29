@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.FilterReader;
+import java.io.Reader;
 
 public class DiscardInputStreamReader extends FilterReader {
 
