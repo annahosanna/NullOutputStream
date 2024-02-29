@@ -12,7 +12,7 @@ public class DiscardInputStream extends FilterInputStream {
     }
 
     @Override
-    public int available() throws IOException {
+    public boolean available() throws IOException {
         return true;
     }
 
@@ -28,7 +28,7 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public int read(byte[] b) throws IOException {
         if ( b == null ) {
-            // throw IOException;
+            throw new IOException();
         }
         return this.read(b, 0, 1);
     }
@@ -50,8 +50,11 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
+        if ( buffer == null ) {
+            throw new IOException();
+        }
         try {
-          while ((this.inputStream.available() > 0) && ( this.inputStream.read(buffer) != -1)) {
+          while (((this.inputStream != null) && (this.inputStream.available() > 0) && ( this.inputStream.read(buffer) != -1)) {
               // Read characters from the input stream and discard them
               // Do nothing with the characters
           }
