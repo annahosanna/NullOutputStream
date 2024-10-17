@@ -6,8 +6,9 @@ public class DiscardInputStreamReader extends FilterReader {
 
     private Reader reader;
     private int offset = 0;
-    
+
     public DiscardInputStreamReader(Reader reader) {
+      super(reader);
       this.reader = reader;
     }
 
@@ -29,16 +30,15 @@ public class DiscardInputStreamReader extends FilterReader {
     public long skip(long n) throws IOException {
         char[] cbuf = new char[1];
         // n is long and I am ignoring the value anyway so do not even try to loop and mod it to chunks less than the size of an int
-        int amountRead = this.read(cbuf, 0, 1);
-        return 0;
+        return this.read(cbuf, 0, 1);
     }
-    
+
     @Override
     public int read() throws IOException {
         char[] cbuf = new char[1];
         return this.read(cbuf, 0, 1);
     }
-    
+
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
@@ -57,7 +57,7 @@ public class DiscardInputStreamReader extends FilterReader {
         // Always return -1 to indicate end of what is currently available in the stream (but the stream is still open)
         return -1;
     }
-    
+
     @Override
     public void close() throws IOException {
         this.reader.close();
@@ -66,10 +66,10 @@ public class DiscardInputStreamReader extends FilterReader {
     @Override
     public void reset() throws IOException {
     }
-    
+
     @Override
     public String toString() {
         return "DiscardInputStreamReader";
-    } 
- 
+    }
+
 }

@@ -5,15 +5,15 @@ import java.io.InputStream;
 public class DiscardInputStream extends FilterInputStream {
 
     private InputStream inputStream;
-  
+
     public DiscardInputStream(InputStream inputStream) {
+        super(inputStream);
         this.inputStream = inputStream;
-        super(this.inputStream);
     }
 
     @Override
-    public boolean available() throws IOException {
-        return true;
+    public int available() throws IOException {
+        return this.inputStream.available;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DiscardInputStream extends FilterInputStream {
 
     @Override
     public int read(byte[] b) throws IOException {
-        if ( b == null ) {
+        if (b == null) {
             throw new IOException();
         }
         return this.read(b, 0, 1);
@@ -36,17 +36,17 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public long skip(long n) throws IOException {
         char[] cbuf = new char[1];
-        // n is long and I am ignoring the value anyway so do not even try to loop and mod it to chunks less than the size of an int
-        int amountRead = this.read(cbuf, 0, 1);
-        return 0;
+        // n is long and I am ignoring the value anyway so do not even try to loop and
+        // mod it to chunks less than the size of an int
+        return this.read(cbuf, 0, 1);
     }
-    
+
     @Override
     public int read() throws IOException {
         char[] cbuf = new char[1];
         return this.read(cbuf, 0, 1);
     }
-    
+
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         char[] buffer = new char[1024];
@@ -64,7 +64,7 @@ public class DiscardInputStream extends FilterInputStream {
         // Always return -1 to indicate end of what is currently available in the stream (but the stream is still open)
         return -1;
     }
-    
+
     @Override
     public void close() throws IOException {
         this.inputStream.close();
@@ -73,7 +73,7 @@ public class DiscardInputStream extends FilterInputStream {
     @Override
     public void reset() throws IOException {
     }
-    
+
     @Override
     public String toString() {
         return "DiscardInputStream";
